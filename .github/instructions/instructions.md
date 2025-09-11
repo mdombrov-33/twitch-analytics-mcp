@@ -71,17 +71,27 @@ twitch-mcp/
 ### All 15 Planned Tools
 
 **Phase 1 - Easy Testing (Start Here)**
-
 1. `discover_trending_streamers` - Get top live streamers (no auth needed, immediate results)
 2. `analyze_game_trends` - Current top games on Twitch (public data, visual results)
 3. `analyze_streamer_performance` - Basic streamer stats (testable with any popular streamer)
 
-**Phase 2 - Core Analytics** 4. `optimal_streaming_times` - Best streaming hours analysis (needs historical data) 5. `compare_streamers` - Side-by-side streamer comparison (2-5 streamers) 6. `weekly_activity_report` - Weekly streamer activity summary 7. `game_popularity_tracker` - Track game viewership trends over time
+**Phase 2 - Core Analytics**
+4. `optimal_streaming_times` - Best streaming hours analysis (needs historical data)
+5. `compare_streamers` - Side-by-side streamer comparison (2-5 streamers)
+6. `weekly_activity_report` - Weekly streamer activity summary
+7. `game_popularity_tracker` - Track game viewership trends over time
 
 **Phase 3 - Advanced Features**  
-8. `analyze_my_follows` - Personal following list analysis (requires user auth) 9. `live_alert_suggestions` - Suggest live streams to watch 10. `favorite_games_watchlist` - Aggregate streams from favorite games 11. `underrated_streamers` - Find low-viewer, high-growth streamers 12. `game_to_streamer_recommendation` - Suggest streamers by game preference
+8. `analyze_my_follows` - Personal following list analysis (requires user auth)
+9. `live_alert_suggestions` - Suggest live streams to watch
+10. `favorite_games_watchlist` - Aggregate streams from favorite games
+11. `underrated_streamers` - Find low-viewer, high-growth streamers
+12. `game_to_streamer_recommendation` - Suggest streamers by game preference
 
-**Phase 4 - Complex Analytics** 13. `engagement_score_calculator` - Estimate engagement from viewer/chat ratios 14. `top_clips` - Most viewed clips (if API supports) 15. `historical_viewership_chart` - Long-term viewership data visualization
+**Phase 4 - Complex Analytics**
+13. `engagement_score_calculator` - Estimate engagement from viewer/chat ratios
+14. `top_clips` - Most viewed clips (if API supports)
+15. `historical_viewership_chart` - Long-term viewership data visualization
 
 ### Testing Strategy for Non-Streamers
 
