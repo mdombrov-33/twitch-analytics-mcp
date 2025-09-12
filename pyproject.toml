@@ -6,7 +6,7 @@ authors = [
     {name = "Maksym Dombrov",email = "maksymdombrov@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.12,<4.0"
 dependencies = [
     "fastmcp (>=2.12.2,<3.0.0)",
     "twitchapi (>=4.5.0,<5.0.0)",
@@ -15,6 +15,9 @@ dependencies = [
     "pydantic (>=2.11.7,<3.0.0)",
     "ruff (>=0.13.0,<0.14.0)"
 ]
+
+[tool.poetry]
+packages = [{include = "src"}]
 
 
 [build-system]
