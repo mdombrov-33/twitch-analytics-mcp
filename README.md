@@ -1,4 +1,3 @@
-
 [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://python.org)
 [![FastMCP](https://img.shields.io/badge/FastMCP-blue?style=for-the-badge)](https://github.com/jlowin/fastmcp)
 [![Twitch](https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white)](https://twitch.tv)
@@ -36,16 +35,17 @@ Instead of manually checking Twitch or using multiple analytics sites, just ask 
 ```
 MCP Client ←→ MCP Protocol ←→ FastMCP Server ←→ Twitch API
                                     ↓
-                            SQLite Analytics Cache
+                            SQLite Analytics History
 ```
 
-The server runs in the background, collecting Twitch data every few minutes and caching it locally. When you query Twitch analytics through your MCP client, it uses the MCP tools to access this data and provide instant insights.
+When you ask questions about Twitch analytics, the server makes fresh API calls to fetch real-time data and optionally caches it to build historical analytics. Every tool call gets the latest live data directly from Twitch.
 
 ## MCP Client Compatibility
 
 Works with any MCP-compatible client including:
 
 - Claude Desktop
+- Tome (supports multiple AI models like Qwen, GPT-4, etc.)
 - Custom MCP implementations
 - Third-party MCP clients
 - Your own applications using MCP libraries
@@ -87,14 +87,6 @@ And 9 more tools for comprehensive Twitch analytics.
     }
   }
 }
-```
-
-**Custom MCP Client:**
-
-```python
-from mcp import ClientSession
-# Connect to the Twitch MCP server
-session = ClientSession("twitch-analytics")
 ```
 
 ## Why MCP?
