@@ -19,7 +19,6 @@ Instead of manually checking Twitch or using multiple analytics sites, just ask 
 - **FastMCP** - MCP server framework
 - **twitchAPI** - Python wrapper for Twitch Helix API
 - **APSW** - SQLite database (cross-platform compatibility)
-- **APScheduler** - Background data collection
 - **Pydantic** - Data validation and modeling
 
 ## How it works
