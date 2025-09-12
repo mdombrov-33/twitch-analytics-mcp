@@ -2,7 +2,7 @@ import os
 from typing import List
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
-from .database import StreamSnapshot
+from .models import StreamSnapshot
 
 
 class TwitchService:

@@ -1,46 +1,8 @@
 import apsw
 from pathlib import Path
-from typing import List, Optional
-from pydantic import BaseModel
+from typing import List
 from datetime import datetime
-
-
-class StreamSnapshot(BaseModel):
-    """Pydantic model for a stream snapshot data"""
-
-    user_login: str
-    user_name: str
-    viewer_count: int
-    game_name: Optional[str] = None
-    game_id: Optional[str] = None
-    title: str
-    timestamp: datetime
-    is_live: bool = True
-    language: str = "en"
-
-
-class UserAnalytics(BaseModel):
-    """Pydantic model for user analytics data"""
-
-    user_login: str
-    user_name: str
-    avg_viewers: int
-    peak_viewers: int
-    total_streams: int
-    top_games: List[str]
-    best_streaming_hours: List[str]
-    last_updated: datetime
-
-
-class GameTrend(BaseModel):
-    """Pydantic model for game trend data"""
-
-    game_id: str
-    game_name: str
-    total_viewers: int
-    total_streams: int
-    trend_score: float
-    timestamp: datetime
+from .models import StreamSnapshot
 
 
 class DatabaseService:
