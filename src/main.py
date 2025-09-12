@@ -28,5 +28,25 @@ async def discover_trending_streamers(limit: int = 10) -> list:
     ]
 
 
+@mcp.tool
+async def get_top_games(limit: int = 10) -> list:
+    """Get current top games from Twitch"""
+    twitch_service = TwitchService()
+
+    games = await twitch_service.get_top_games(limit)
+
+    return [
+        {
+            "rank": g.rank,
+            "game_name": g.game_name,
+            "game_id": g.game_id,
+            "box_art_url": g.box_art_url,
+            "igdb_id": g.igdb_id,
+            "timestamp": str(g.timestamp),  # Convert datetime to string for JSON
+        }
+        for g in games
+    ]
+
+
 if __name__ == "__main__":
     mcp.run()
