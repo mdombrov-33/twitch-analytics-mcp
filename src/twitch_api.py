@@ -2,7 +2,8 @@ import os
 from typing import List
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
-from database import StreamSnapshot
+from .database import StreamSnapshot
+import traceback
 
 
 class TwitchService:
@@ -54,14 +55,13 @@ async def test_twitch_api():
     service = TwitchService()
     try:
         streams = await service.get_trending_streams(5)
-        print(f"✅ Successfully fetched {len(streams)} trending streams:")
+        print(f"Successfully fetched {len(streams)} trending streams:")
         for i, stream in enumerate(streams, 1):
             print(
                 f"{i}. {stream.user_name}: {stream.viewer_count:,} viewers - {stream.game_name}"
             )
     except Exception as e:
-        print(f"❌ Error: {e}")
-        import traceback
+        print(f"Error: {e}")
 
         traceback.print_exc()
 
