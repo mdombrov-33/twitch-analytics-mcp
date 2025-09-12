@@ -13,7 +13,6 @@ This project builds an MCP (Model Context Protocol) server that transforms Claud
 - **FastMCP** - MCP server framework for Claude Desktop integration
 - **python-twitch-api** - Python wrapper for Twitch Helix API
 - **APSW** - SQLite database wrapper (chosen for WSL2/Windows compatibility)
-- **APScheduler** - Background data collection scheduling
 - **python-dotenv** - Environment variable management
 
 ## Key Resources
@@ -42,7 +41,7 @@ This project builds an MCP (Model Context Protocol) server that transforms Claud
 - **Twitch API**: Rate limiting is critical (800 requests/minute), implement proper token management
 - **FastMCP**: Use unique tool names to avoid conflicts with other MCP servers
 - **APSW**: Chosen over sqlite3 for better WSL2/Claude Desktop compatibility
-- **Background tasks**: Use APScheduler for periodic data collection
+- **On-demand data**: Tools fetch fresh data from API on each call and optionally cache to database
 
 ### Project Structure
 
@@ -55,15 +54,10 @@ twitch-mcp/
 │   └── instructions/
 │       └── instructions.md           # This file
 └── src/
-    └── twitch_analytics_mcp/
-        ├── __init__.py               # Package initialization
-        ├── main.py                   # MCP server entry point & scheduler
-        ├── twitch_api.py             # Twitch API client & rate limiting
-        ├── database.py               # Database schema & operations
-        └── tools/
-            ├── __init__.py           # Tools package init
-            ├── streamer_tools.py     # Streamer analysis MCP tools
-            └── game_tools.py         # Game trend analysis MCP tools
+    ├── __init__.py                   # Package initialization
+    ├── main.py                       # MCP server entry point & tools
+    ├── twitch_api.py                 # Twitch API client & rate limiting
+    └── database.py                   # Database schema & operations
 ```
 
 ## MCP Tools Implementation Plan
@@ -120,79 +114,5 @@ twitch-mcp/
 4. Add background data collection
 5. Test integration with Claude Desktop
 6. Implement remaining phases incrementally
-
-Remember: If unsure about specific library usage or API details, request documentation rather than making assumptions.
-
-# Twitch Analytics MCP Server - Development Guidelines
-
-## Project Overview
-
-This project builds an MCP (Model Context Protocol) server that transforms Claude Desktop into a Twitch analytics assistant. The server provides real-time streamer performance analysis, game trend discovery, and optimal streaming time suggestions using the Twitch Helix API.
-
-## Architecture & Tech Stack
-
-- **FastMCP** - MCP server framework for Claude Desktop integration
-- **twitchAPI** - Python wrapper for Twitch Helix API
-- **APSW** - SQLite database wrapper (chosen for WSL2/Windows compatibility)
-- **APScheduler** - Background data collection scheduling
-- **python-dotenv** - Environment variable management
-
-## Development Approach
-
-### Code Organization
-
-- **Class-based approach preferred** - Use classes for services and tool groupings
-- **Separation of concerns** - Keep API logic, database operations, and MCP tools separate
-- **Modular structure** - Tools organized by functionality (streamer tools vs game tools)
-
-### Implementation Guidelines
-
-1. **Never modify files directly** - Always provide code snippets for manual implementation
-2. **Ask before assuming** - If library-specific implementation details are unclear, request documentation
-3. **Exact implementation may vary** - Focus on concepts and structure over rigid code copying
-4. **Test incrementally** - Implement and test features step by step
-
-### Library-Specific Notes
-
-- **Twitch API**: Rate limiting is critical (800 requests/minute), implement proper token management
-- **FastMCP**: Use unique tool names to avoid conflicts with other MCP servers
-- **APSW**: Chosen over sqlite3 for better WSL2/Claude Desktop compatibility
-- **Background tasks**: Use APScheduler for periodic data collection
-
-### Project Structure
-
-src/twitch_analytics_mcp/ ├── main.py # MCP server entry point ├── twitch_api.py # Twitch API client and rate limiting ├── database.py # Database schema and operations └── tools/ ├── streamer_tools.py # Streamer analysis MCP tools └── game_tools.py # Game trend analysis MCP tools
-
-### Commit Standards
-
-- Use scope-feature-commit format for one-liner commits
-- Commit after each logical development step
-- Keep commits focused and atomic
-
-### Environment Considerations
-
-- **WSL2 compatibility** - Database and file operations must work across WSL2/Windows boundary
-- **Claude Desktop integration** - MCP server runs as background process, not web service
-- **No web framework needed** - Direct MCP protocol communication, no HTTP endpoints
-
-## MCP Tools to Implement
-
-Core analytics tools for Claude integration:
-
-- Streamer performance analysis
-- Optimal streaming time recommendations
-- Trending streamer discovery
-- Game trend analysis
-- Personal following analysis
-- Cross-streamer comparisons
-
-## Development Workflow
-
-1. Implement database schema and connection handling
-2. Set up Twitch API client with proper authentication
-3. Create core MCP tools with error handling
-4. Add background data collection
-5. Test integration with Claude Desktop
-6. Iterate and refine based on testing
 
 Remember: If unsure about specific library usage or API details, request documentation rather than making assumptions.
