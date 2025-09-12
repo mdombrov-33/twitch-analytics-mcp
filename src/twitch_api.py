@@ -10,6 +10,7 @@ class TwitchService:
         load_dotenv()
         app_id = os.getenv("TWITCH_APP_ID")
         app_secret = os.getenv("TWITCH_APP_SECRET")
+        self.twitch = None
 
         if not app_id or not app_secret:
             raise ValueError(
@@ -19,9 +20,22 @@ class TwitchService:
         self.app_id = app_id
         self.app_secret = app_secret
 
-    async def get_trending_streams(self, limit: int = 20) -> List[StreamSnapshot]:
+    async def _get_client(self) -> Twitch:
+        """Get or create Twitch API client"""
+        if self.twitch is None:
+            self.twitch = await Twitch(self.app_id, self.app_secret)
+        return self.twitch
+
+    async def close(self):
+        """Clean up connection"""
+        if self.twitch:
+            await self.twitch.close()
+            self.twitch = None
+
+    async def get_trending_streams(self, limit: int = 10) -> List[StreamSnapshot]:
         """Fetch trending streams from Twitch API"""
-        twitch = await Twitch(self.app_id, self.app_secret)
+        twitch = await self._get_client()
+
         try:
             streams = []
             async for stream in twitch.get_streams(first=limit):
@@ -39,9 +53,10 @@ class TwitchService:
                 streams.append(snapshot)
 
                 # Stop when we reach the limit
+                # If we don't write this then generator will fetch infinitely
                 if len(streams) >= limit:
                     break
 
             return streams
         finally:
-            await twitch.close()
+            await self.close()
