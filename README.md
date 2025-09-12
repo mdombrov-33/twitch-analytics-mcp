@@ -1,3 +1,9 @@
+
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://python.org)
+[![FastMCP](https://img.shields.io/badge/FastMCP-blue?style=for-the-badge)](https://github.com/jlowin/fastmcp)
+[![Twitch](https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white)](https://twitch.tv)
+[![MCP Server](https://img.shields.io/badge/MCP-Server-brightgreen?style=for-the-badge&logo=claude&logoColor=white)](https://modelcontextprotocol.io)
+
 # Twitch Analytics MCP Server
 
 A Model Context Protocol (MCP) server that provides comprehensive Twitch analytics through any MCP-compatible client. Analyze streamer performance, discover trending content, and get data-driven streaming insights using real Twitch API data.
