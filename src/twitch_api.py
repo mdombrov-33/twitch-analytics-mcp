@@ -2,7 +2,8 @@ import os
 from typing import List
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
-from .models import StreamSnapshot
+from .models import StreamSnapshot, GameRanking
+from datetime import datetime
 
 
 class TwitchService:
@@ -58,5 +59,29 @@ class TwitchService:
                     break
 
             return streams
+        finally:
+            await self.close()
+
+    async def get_top_games(self, limit: int = 10) -> List[GameRanking]:
+        """Fetch top games from Twitch API"""
+        twitch = await self._get_client()
+
+        try:
+            games = []
+            async for game in twitch.get_top_games(first=limit):
+                ranking = GameRanking(
+                    game_id=game.id,
+                    game_name=game.name,
+                    box_art_url=game.box_art_url,
+                    igdb_id=game.igdb_id,
+                    rank=len(games) + 1,
+                    timestamp=datetime.now(),
+                )
+                games.append(ranking)
+
+                if len(games) >= limit:
+                    break
+
+            return games
         finally:
             await self.close()
