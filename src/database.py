@@ -1,8 +1,8 @@
 import apsw
-from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 from pydantic import BaseModel
+from datetime import datetime
 
 
 class StreamSnapshot(BaseModel):
@@ -178,3 +178,87 @@ class DatabaseService:
             CREATE INDEX IF NOT EXISTS idx_trends_total_viewers 
             ON game_trends(total_viewers DESC)
         """)
+
+    def insert_stream_snapshots(self, snapshots: List[StreamSnapshot]) -> int:
+        """Insert multiple stream snapshots into the database"""
+        if not snapshots:
+            return 0
+
+        cursor = self.connection.cursor()
+
+        # Prepare the insert query
+        query = """
+            INSERT INTO stream_snapshots 
+            (user_login, user_name, viewer_count, game_name, game_id, 
+             title, timestamp, is_live, language)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """
+
+        # Convert snapshots to tuples for bulk insert
+        data = []
+        for snapshot in snapshots:
+            data.append(
+                (
+                    snapshot.user_login,
+                    snapshot.user_name,
+                    snapshot.viewer_count,
+                    snapshot.game_name,
+                    snapshot.game_id,
+                    snapshot.title,
+                    snapshot.timestamp.isoformat() if snapshot.timestamp else None,
+                    1 if snapshot.is_live else 0,
+                    snapshot.language,
+                )
+            )
+
+        try:
+            cursor.executemany(query, data)
+            inserted_count = len(data)
+            print(f"Inserted {inserted_count} stream snapshots")
+            return inserted_count
+        except Exception as e:
+            print(f"Error inserting stream snapshots: {e}")
+            raise
+
+    def get_recent_streams(self, limit: int = 20) -> List[StreamSnapshot]:
+        """Get recent stream snapshots from database"""
+        cursor = self.connection.cursor()
+
+        query = """
+            SELECT user_login, user_name, viewer_count, game_name, game_id,
+                   title, timestamp, is_live, language
+            FROM stream_snapshots 
+            ORDER BY timestamp DESC 
+            LIMIT ?
+        """
+
+        try:
+            rows = cursor.execute(query, (limit,)).fetchall()
+            snapshots = []
+
+            for row in rows:
+                # Convert SQLite values to proper Python types
+                timestamp_str = str(row[6]) if row[6] else None
+                timestamp = (
+                    datetime.fromisoformat(timestamp_str)
+                    if timestamp_str
+                    else datetime.now()
+                )
+
+                snapshot = StreamSnapshot(
+                    user_login=str(row[0]),
+                    user_name=str(row[1]),
+                    viewer_count=int(row[2]) if row[2] is not None else 0,
+                    game_name=str(row[3]) if row[3] else None,
+                    game_id=str(row[4]) if row[4] else None,
+                    title=str(row[5]),
+                    timestamp=timestamp,
+                    is_live=bool(row[7]),
+                    language=str(row[8]),
+                )
+                snapshots.append(snapshot)
+
+            return snapshots
+        except Exception as e:
+            print(f"Error fetching recent streams: {e}")
+            raise
