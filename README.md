@@ -1,10 +1,10 @@
 # Twitch Analytics MCP Server
 
-A Model Context Protocol (MCP) server that turns Claude Desktop into a Twitch analytics assistant. Analyze streamer performance, discover trending content, and get data-driven streaming insights using real Twitch API data.
+A Model Context Protocol (MCP) server that provides comprehensive Twitch analytics through any MCP-compatible client. Analyze streamer performance, discover trending content, and get data-driven streaming insights using real Twitch API data.
 
 ## What is this?
 
-This MCP server connects Claude Desktop to Twitch's API, giving you tools to:
+This MCP server connects any MCP client to Twitch's API, giving you tools to:
 
 - Analyze any streamer's performance and growth trends
 - Find trending streamers and games in real-time
@@ -12,25 +12,34 @@ This MCP server connects Claude Desktop to Twitch's API, giving you tools to:
 - Compare streamers side-by-side
 - Track game popularity over time
 
-Instead of manually checking Twitch or using multiple analytics sites, just ask Claude questions like "How is pokimane performing this week?" or "What games are trending right now?"
+Instead of manually checking Twitch or using multiple analytics sites, just ask your MCP client questions like "How is pokimane performing this week?" or "What games are trending right now?"
 
 ## Tech Stack
 
-- **FastMCP** - Server framework for Claude Desktop integration
+- **FastMCP** - MCP server framework
 - **twitchAPI** - Python wrapper for Twitch Helix API
-- **APSW** - SQLite database (chosen for WSL2 compatibility)
+- **APSW** - SQLite database (cross-platform compatibility)
 - **APScheduler** - Background data collection
 - **Pydantic** - Data validation and modeling
 
 ## How it works
 
 ```
-Claude Desktop ←→ MCP Protocol ←→ FastMCP Server ←→ Twitch API
-                                       ↓
-                               SQLite Analytics Cache
+MCP Client ←→ MCP Protocol ←→ FastMCP Server ←→ Twitch API
+                                    ↓
+                            SQLite Analytics Cache
 ```
 
-The server runs in the background, collecting Twitch data every few minutes and caching it locally. When you ask Claude about Twitch analytics, it uses the MCP tools to query this data and give you instant insights.
+The server runs in the background, collecting Twitch data every few minutes and caching it locally. When you query Twitch analytics through your MCP client, it uses the MCP tools to access this data and provide instant insights.
+
+## MCP Client Compatibility
+
+Works with any MCP-compatible client including:
+
+- Claude Desktop
+- Custom MCP implementations
+- Third-party MCP clients
+- Your own applications using MCP libraries
 
 ## Features (Planned)
 
@@ -53,9 +62,32 @@ And 9 more tools for comprehensive Twitch analytics.
 1. Get Twitch API credentials from [dev.twitch.tv](https://dev.twitch.tv/)
 2. Install dependencies: `poetry install`
 3. Configure environment variables in `.env`
-4. Add server to Claude Desktop's MCP configuration via JSON file
-5. Start asking Claude about Twitch data!
+4. Add server to your MCP client's configuration
+5. Start querying Twitch data through your preferred MCP client!
+
+## Configuration Examples
+
+**Claude Desktop (mcp_settings.json):**
+
+```json
+{
+  "mcpServers": {
+    "twitch-analytics": {
+      "command": "python",
+      "args": ["-m", "twitch_analytics_mcp"]
+    }
+  }
+}
+```
+
+**Custom MCP Client:**
+
+```python
+from mcp import ClientSession
+# Connect to the Twitch MCP server
+session = ClientSession("twitch-analytics")
+```
 
 ## Why MCP?
 
-Model Context Protocol lets Claude Desktop integrate with external tools seamlessly. Instead of building a web interface or CLI, Claude becomes your natural language interface to Twitch analytics. Just talk to Claude like you're asking a Twitch expert.
+Model Context Protocol provides a standardized way for AI systems and applications to access external tools and data sources. Instead of building custom integrations for each client, this server works with any MCP-compatible system, making Twitch analytics accessible through natural language queries across different platforms.
