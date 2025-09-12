@@ -15,7 +15,7 @@ This MCP server connects any MCP client to Twitch's API, giving you tools to:
 Instead of manually checking Twitch or using multiple analytics sites, just ask your MCP client questions like "How is pokimane performing this week?" or "What games are trending right now?"
 
 <p align="center">
-  <img src="twitch-analytics.gif" alt="Demo Gif" width="400"/>
+  <img src="twitch-analytics.gif" alt="Demo Gif" width="1000"/>
 </p>
 
 ## Tech Stack
