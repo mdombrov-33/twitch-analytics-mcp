@@ -3,7 +3,6 @@ from typing import List
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
 from .database import StreamSnapshot
-import traceback
 
 
 class TwitchService:
@@ -46,27 +45,3 @@ class TwitchService:
             return streams
         finally:
             await twitch.close()
-
-
-# Test function
-async def test_twitch_api():
-    """Simple test of the Twitch API connection"""
-    print("Testing Twitch API connection...")
-    service = TwitchService()
-    try:
-        streams = await service.get_trending_streams(5)
-        print(f"Successfully fetched {len(streams)} trending streams:")
-        for i, stream in enumerate(streams, 1):
-            print(
-                f"{i}. {stream.user_name}: {stream.viewer_count:,} viewers - {stream.game_name}"
-            )
-    except Exception as e:
-        print(f"Error: {e}")
-
-        traceback.print_exc()
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    asyncio.run(test_twitch_api())
