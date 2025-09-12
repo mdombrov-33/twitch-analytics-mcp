@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List, Optional
 from datetime import datetime
 
 
@@ -9,8 +8,8 @@ class StreamSnapshot(BaseModel):
     user_login: str
     user_name: str
     viewer_count: int
-    game_name: Optional[str] = None
-    game_id: Optional[str] = None
+    game_name: str | None = None
+    game_id: str | None = None
     title: str
     timestamp: datetime
     is_live: bool = True
@@ -25,8 +24,8 @@ class UserAnalytics(BaseModel):
     avg_viewers: int
     peak_viewers: int
     total_streams: int
-    top_games: List[str]
-    best_streaming_hours: List[str]
+    top_games: list[str]
+    best_streaming_hours: list[str]
     last_updated: datetime
 
 
@@ -47,6 +46,6 @@ class GameRanking(BaseModel):
     game_id: str
     game_name: str
     box_art_url: str
-    igdb_id: Optional[str] = None
+    igdb_id: str | None = None
     rank: int
     timestamp: datetime

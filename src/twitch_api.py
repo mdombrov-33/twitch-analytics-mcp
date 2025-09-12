@@ -1,5 +1,4 @@
 import os
-from typing import List
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
 from .models import StreamSnapshot, GameRanking
@@ -33,7 +32,7 @@ class TwitchService:
             await self.twitch.close()
             self.twitch = None
 
-    async def get_trending_streams(self, limit: int = 10) -> List[StreamSnapshot]:
+    async def get_trending_streams(self, limit: int = 10) -> list[StreamSnapshot]:
         """Fetch trending streams from Twitch API"""
         twitch = await self._get_client()
 
@@ -62,12 +61,12 @@ class TwitchService:
         finally:
             await self.close()
 
-    async def get_top_games(self, limit: int = 10) -> List[GameRanking]:
+    async def get_top_games(self, limit: int = 10) -> list[GameRanking]:
         """Fetch top games from Twitch API"""
         twitch = await self._get_client()
 
         try:
-            games = []
+            games: list[GameRanking] = []
             async for game in twitch.get_top_games(first=limit):
                 ranking = GameRanking(
                     game_id=game.id,

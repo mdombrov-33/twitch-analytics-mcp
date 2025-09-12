@@ -6,7 +6,7 @@ mcp = FastMCP("Twitch Analytics")
 
 
 @mcp.tool
-async def discover_trending_streamers(limit: int = 10) -> list:
+async def discover_trending_streamers(limit: int = 10) -> list[dict]:
     """Get current trending streamers from Twitch"""
     twitch_service = TwitchService()
     db_service = DatabaseService("twitch_analytics.db")
@@ -29,7 +29,7 @@ async def discover_trending_streamers(limit: int = 10) -> list:
 
 
 @mcp.tool
-async def get_top_games(limit: int = 10) -> list:
+async def get_top_games(limit: int = 10) -> list[dict]:
     """Get current top games from Twitch"""
     twitch_service = TwitchService()
 

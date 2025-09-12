@@ -1,6 +1,5 @@
 import apsw
 from pathlib import Path
-from typing import List
 from datetime import datetime
 from .models import StreamSnapshot
 
@@ -141,7 +140,7 @@ class DatabaseService:
             ON game_trends(total_viewers DESC)
         """)
 
-    def insert_stream_snapshots(self, snapshots: List[StreamSnapshot]) -> int:
+    def insert_stream_snapshots(self, snapshots: list[StreamSnapshot]) -> int:
         """Insert multiple stream snapshots into the database"""
         if not snapshots:
             return 0
@@ -182,7 +181,7 @@ class DatabaseService:
             print(f"Error inserting stream snapshots: {e}")
             raise
 
-    def get_recent_streams(self, limit: int = 20) -> List[StreamSnapshot]:
+    def get_recent_streams(self, limit: int = 20) -> list[StreamSnapshot]:
         """Get recent stream snapshots from database"""
         cursor = self.connection.cursor()
 
