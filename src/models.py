@@ -39,3 +39,14 @@ class GameTrend(BaseModel):
     total_streams: int
     trend_score: float
     timestamp: datetime
+
+
+class GameRanking(BaseModel):
+    """Pydantic model for game ranking data"""
+
+    game_id: str
+    game_name: str
+    box_art_url: str
+    igdb_id: Optional[str] = None
+    rank: int
+    timestamp: datetime
