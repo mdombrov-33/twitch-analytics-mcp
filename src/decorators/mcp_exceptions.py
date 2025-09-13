@@ -1,10 +1,10 @@
 import functools
-from ..utils.exceptions import (
+from src.utils.exceptions import (
     AuthenticationError,
     ServiceUnavailableError,
     ResourceNotFoundError,
 )
-from ..utils.logging_config import logger
+from src.utils.logging_config import logger
 
 
 def handle_mcp_exceptions(func):

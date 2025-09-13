@@ -1,5 +1,5 @@
 import functools
-from ..utils.exceptions import (
+from src.utils.exceptions import (
     AuthenticationError,
     ServiceUnavailableError,
 )
