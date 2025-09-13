@@ -32,3 +32,9 @@ class ConfigurationError(TwitchAnalyticsException):
     """Raised when there are configuration issues"""
 
     pass
+
+
+class DatabaseError(TwitchAnalyticsException):
+    """Raised when database operations fail"""
+
+    pass

@@ -3,6 +3,7 @@ from src.utils.exceptions import (
     AuthenticationError,
     ServiceUnavailableError,
     ResourceNotFoundError,
+    DatabaseError,
 )
 from src.utils.logging_config import logger
 
@@ -23,6 +24,9 @@ def handle_mcp_exceptions(func):
         except ResourceNotFoundError as e:
             logger.warning(f"No resources found in {func.__name__}: {e}")
             return [{"message": str(e)}]
+        except DatabaseError as e:
+            logger.error(f"Database error in {func.__name__}: {e}")
+            return [{"error": f"Database operation failed: {e}"}]
         except Exception as e:
             logger.error(f"Unexpected error in {func.__name__}: {e}")
             return [{"error": f"An unexpected error occurred: {e}"}]

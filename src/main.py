@@ -3,6 +3,7 @@ from src.services.twitch_api import TwitchService
 from src.db.database import DatabaseService
 from src.utils.logging_config import logger
 from src.decorators.mcp_exceptions import handle_mcp_exceptions
+from src.utils.exceptions import DatabaseError
 
 mcp = FastMCP("Twitch Analytics")
 
@@ -25,7 +26,11 @@ async def discover_trending_streamers(limit: int = 10) -> list[dict]:
         db_service = DatabaseService("twitch_analytics.db")
 
         streams = await twitch_service.get_trending_streams(limit)
-        db_service.insert_stream_snapshots(streams)
+
+        try:
+            db_service.insert_stream_snapshots(streams)
+        except Exception as db_error:
+            raise DatabaseError(f"Failed to save stream snapshots: {db_error}")
 
         result = [
             {
@@ -45,7 +50,10 @@ async def discover_trending_streamers(limit: int = 10) -> list[dict]:
 
     finally:
         if "twitch_service" in locals() and twitch_service:
-            await twitch_service.close()
+            try:
+                await twitch_service.close()
+            except Exception as cleanup_error:
+                logger.warning(f"Error during cleanup: {cleanup_error}")
 
 
 @mcp.tool
