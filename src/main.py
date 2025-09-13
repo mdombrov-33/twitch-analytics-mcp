@@ -1,17 +1,14 @@
 from fastmcp import FastMCP
-from src.twitch_api import TwitchService
-from src.database import DatabaseService
-from src.exceptions import (
-    AuthenticationError,
-    ServiceUnavailableError,
-    ResourceNotFoundError,
-)
-from src.logging_config import logger
+from src.services.twitch_api import TwitchService
+from src.services.database import DatabaseService
+from src.utils.logging_config import logger
+from src.decorators.mcp_exceptions import handle_mcp_exceptions
 
 mcp = FastMCP("Twitch Analytics")
 
 
 @mcp.tool
+@handle_mcp_exceptions
 async def discover_trending_streamers(limit: int = 10) -> list[dict]:
     """Get current trending streamers from Twitch
 
@@ -46,25 +43,13 @@ async def discover_trending_streamers(limit: int = 10) -> list[dict]:
         logger.info(f"Successfully returned {len(result)} trending streamers")
         return result
 
-    except AuthenticationError as e:
-        logger.error(f"Authentication error in discover_trending_streamers: {e}")
-        return [{"error": f"Authentication failed: {e}"}]
-    except ServiceUnavailableError as e:
-        logger.error(f"Service unavailable in discover_trending_streamers: {e}")
-        return [{"error": f"Service temporarily unavailable: {e}"}]
-    except ResourceNotFoundError as e:
-        logger.warning(f"No resources found in discover_trending_streamers: {e}")
-        return [{"message": str(e)}]
-    except Exception as e:
-        logger.error(f"Unexpected error in discover_trending_streamers: {e}")
-        return [{"error": f"An unexpected error occurred: {e}"}]
     finally:
-        # Always close the connection, regardless of success or failure
         if "twitch_service" in locals() and twitch_service:
             await twitch_service.close()
 
 
 @mcp.tool
+@handle_mcp_exceptions
 async def get_top_games(limit: int = 10) -> list[dict]:
     """Get current top games from Twitch
 
@@ -95,22 +80,12 @@ async def get_top_games(limit: int = 10) -> list[dict]:
         logger.info(f"Successfully returned {len(result)} top games")
         return result
 
-    except AuthenticationError as e:
-        logger.error(f"Authentication error in get_top_games: {e}")
-        return [{"error": f"Authentication failed: {e}"}]
-    except ServiceUnavailableError as e:
-        logger.error(f"Service unavailable in get_top_games: {e}")
-        return [{"error": f"Service temporarily unavailable: {e}"}]
-    except ResourceNotFoundError as e:
-        logger.warning(f"No resources found in get_top_games: {e}")
-        return [{"message": str(e)}]
-    except Exception as e:
-        logger.error(f"Unexpected error in get_top_games: {e}")
-        return [{"error": f"An unexpected error occurred: {e}"}]
     finally:
-        # Always close the connection, regardless of success or failure
         if "twitch_service" in locals() and twitch_service:
-            await twitch_service.close()
+            try:
+                await twitch_service.close()
+            except Exception as cleanup_error:
+                logger.warning(f"Error during cleanup: {cleanup_error}")
 
 
 if __name__ == "__main__":

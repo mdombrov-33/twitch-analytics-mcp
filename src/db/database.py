@@ -1,7 +1,7 @@
 import apsw
 from pathlib import Path
 from datetime import datetime
-from .models import StreamSnapshot
+from ..models import StreamSnapshot
 
 
 class DatabaseService:

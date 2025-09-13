@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
 from twitchAPI.twitch import Twitch
-from .models import StreamSnapshot, GameRanking
-from .exceptions import ConfigurationError, ResourceNotFoundError
-from .logging_config import logger
-from .twitch_exceptions import handle_twitch_exceptions
+from ..models import StreamSnapshot, GameRanking
+from ..utils.exceptions import ConfigurationError, ResourceNotFoundError
+from ..utils.logging_config import logger
+from ..decorators.twitch_exceptions import handle_twitch_exceptions
 from datetime import datetime
 
 

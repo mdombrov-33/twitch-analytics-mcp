@@ -1,8 +1,8 @@
 import asyncio
 import sys
 from pathlib import Path
-from src.twitch_api import TwitchService
-from src.database import DatabaseService
+from src.services.twitch_api import TwitchService
+from src.services.database import DatabaseService
 
 # Add the parent directory to sys.path so we can import from src
 sys.path.append(str(Path(__file__).parent.parent))
