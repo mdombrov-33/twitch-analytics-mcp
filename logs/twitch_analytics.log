@@ -12,3 +12,6 @@
 2025-09-13 13:05:57,448 - twitch_analytics - INFO - Fetching 10 top games
 2025-09-13 13:05:57,449 - twitch_analytics - INFO - TwitchService initialized successfully
 2025-09-13 13:05:58,735 - twitch_analytics - INFO - Successfully returned 10 top games
+2025-09-13 13:10:20,957 - twitch_analytics - INFO - Fetching 10 trending streamers
+2025-09-13 13:10:20,957 - twitch_analytics - INFO - TwitchService initialized successfully
+2025-09-13 13:10:22,198 - twitch_analytics - INFO - Successfully returned 10 trending streamers

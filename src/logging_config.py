@@ -24,7 +24,7 @@ def setup_logger(
     logger.setLevel(level)
 
     # Create console handler
-    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler = logging.StreamHandler(sys.stderr)  # Use stderr instead of stdout
     console_handler.setLevel(level)
 
     # Create file handler (optional)
