@@ -76,18 +76,78 @@ And 9 more tools for comprehensive Twitch analytics.
 
 ## Configuration Examples
 
-**Claude Desktop (mcp_settings.json):**
+### Claude Desktop Configuration
+
+Add the following to your Claude Desktop `claude_desktop_config.json` file:
+
+**For WSL:**
 
 ```json
 {
   "mcpServers": {
     "twitch-analytics": {
-      "command": "python",
-      "args": ["-m", "twitch_analytics_mcp"]
+      "command": "wsl",
+      "args": [
+        "bash",
+        "-c",
+        "cd /path/to/your/twitch-mcp && poetry run python -m src.main"
+      ],
+      "env": {
+        "TWITCH_APP_ID": "your_app_id_here",
+        "TWITCH_APP_SECRET": "your_app_secret_here"
+      }
     }
   }
 }
 ```
+
+**For Windows:**
+
+```json
+{
+  "mcpServers": {
+    "twitch-analytics": {
+      "command": "powershell",
+      "args": [
+        "-Command",
+        "cd 'C:\\path\\to\\your\\twitch-mcp'; poetry run python -m src.main"
+      ],
+      "env": {
+        "TWITCH_APP_ID": "your_app_id_here",
+        "TWITCH_APP_SECRET": "your_app_secret_here"
+      }
+    }
+  }
+}
+```
+
+**For Linux/macOS:**
+
+```json
+{
+  "mcpServers": {
+    "twitch-analytics": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd /path/to/your/twitch-mcp && poetry run python -m src.main"
+      ],
+      "env": {
+        "TWITCH_APP_ID": "your_app_id_here",
+        "TWITCH_APP_SECRET": "your_app_secret_here"
+      }
+    }
+  }
+}
+```
+
+**Important Notes:**
+
+- Replace `/path/to/your/twitch-mcp` with the actual path to your project directory
+- Replace `your_app_id_here` and `your_app_secret_here` with your actual Twitch API credentials
+- Ensure Poetry is installed and available in your system PATH
+- For WSL, make sure the path uses Linux-style forward slashes
+- For Windows, use backslashes in the path and escape them in JSON
 
 ## Why MCP?
 
