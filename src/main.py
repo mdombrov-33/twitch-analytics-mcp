@@ -1,6 +1,6 @@
 from fastmcp import FastMCP
 from src.services.twitch_api import TwitchService
-from src.services.database import DatabaseService
+from src.db.database import DatabaseService
 from src.utils.logging_config import logger
 from src.decorators.mcp_exceptions import handle_mcp_exceptions
 

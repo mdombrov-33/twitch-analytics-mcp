@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from src.services.database import DatabaseService
+from src.db.database import DatabaseService
 
 # Add the parent directory to sys.path so we can import from src
 sys.path.append(str(Path(__file__).parent.parent))
