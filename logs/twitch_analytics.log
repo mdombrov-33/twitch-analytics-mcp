@@ -1,0 +1,14 @@
+2025-09-13 12:30:38,714 - twitch_analytics - INFO - Fetching 10 trending streamers
+2025-09-13 12:30:38,715 - twitch_analytics - INFO - TwitchService initialized successfully
+2025-09-13 12:30:39,992 - twitch_analytics - INFO - Successfully completed fetch trending streams
+2025-09-13 12:30:40,288 - twitch_analytics - INFO - Successfully returned 10 trending streamers
+2025-09-13 12:32:01,612 - twitch_analytics - INFO - Fetching 10 top games
+2025-09-13 12:32:01,613 - twitch_analytics - INFO - TwitchService initialized successfully
+2025-09-13 12:32:02,830 - twitch_analytics - INFO - Successfully completed fetch top games
+2025-09-13 12:32:03,081 - twitch_analytics - INFO - Successfully returned 10 top games
+2025-09-13 12:44:05,089 - twitch_analytics - INFO - Fetching 10 top games
+2025-09-13 12:44:05,090 - twitch_analytics - INFO - TwitchService initialized successfully
+2025-09-13 12:44:06,571 - twitch_analytics - INFO - Successfully returned 10 top games
+2025-09-13 13:05:57,448 - twitch_analytics - INFO - Fetching 10 top games
+2025-09-13 13:05:57,449 - twitch_analytics - INFO - TwitchService initialized successfully
+2025-09-13 13:05:58,735 - twitch_analytics - INFO - Successfully returned 10 top games
