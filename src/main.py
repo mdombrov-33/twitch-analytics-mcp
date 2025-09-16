@@ -10,7 +10,7 @@ mcp = FastMCP("Twitch Analytics")
 
 @mcp.tool
 @handle_mcp_exceptions
-async def discover_trending_streamers(limit: int = 10) -> list[dict]:
+async def get_trending_channels(limit: int = 10) -> list[dict]:
     """Get current trending streamers from Twitch
 
     Args:
@@ -98,7 +98,7 @@ async def get_top_games(limit: int = 10) -> list[dict]:
 
 @mcp.tool
 @handle_mcp_exceptions
-async def get_streamer_current_performance(user_login: str) -> dict:
+async def get_channel_current_performance(user_login: str) -> dict:
     """Get current performance metrics for a specific streamer
 
     Args:
