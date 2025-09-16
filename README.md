@@ -18,7 +18,9 @@ This MCP server connects any MCP client to Twitch's API, giving you tools to:
 
 Instead of using multiple tools and dashboards, just ask your MCP client natural language questions like "What are the top games right now?" or "How is shroud performing today?"
 
-
+<p align="center">
+  <img src="twitch-control.gif" alt="Demo Gif" width="1200"/>
+</p>
 
 ## Tech Stack
 
