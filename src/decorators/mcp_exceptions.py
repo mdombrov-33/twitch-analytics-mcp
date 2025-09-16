@@ -17,18 +17,18 @@ def handle_mcp_exceptions(func):
             return await func(*args, **kwargs)
         except AuthenticationError as e:
             logger.error(f"Authentication error in {func.__name__}: {e}")
-            return [{"error": f"Authentication failed: {e}"}]
+            return {"error": f"Authentication failed: {e}"}
         except ServiceUnavailableError as e:
             logger.error(f"Service unavailable in {func.__name__}: {e}")
-            return [{"error": f"Service temporarily unavailable: {e}"}]
+            return {"error": f"Service temporarily unavailable: {e}"}
         except ResourceNotFoundError as e:
             logger.warning(f"No resources found in {func.__name__}: {e}")
-            return [{"message": str(e)}]
+            return {"message": str(e)}
         except DatabaseError as e:
             logger.error(f"Database error in {func.__name__}: {e}")
-            return [{"error": f"Database operation failed: {e}"}]
+            return {"error": f"Database operation failed: {e}"}
         except Exception as e:
             logger.error(f"Unexpected error in {func.__name__}: {e}")
-            return [{"error": f"An unexpected error occurred: {e}"}]
+            return {"error": f"An unexpected error occurred: {e}"}
 
     return wrapper
