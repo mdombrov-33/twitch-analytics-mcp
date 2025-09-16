@@ -5,7 +5,7 @@ from src.utils.logging_config import logger
 from src.decorators.mcp_exceptions import handle_mcp_exceptions
 from src.utils.exceptions import DatabaseError
 
-mcp = FastMCP("Twitch Analytics")
+mcp = FastMCP("Twitch MCP")
 
 
 @mcp.tool
