@@ -96,5 +96,50 @@ async def get_top_games(limit: int = 10) -> list[dict]:
                 logger.warning(f"Error during cleanup: {cleanup_error}")
 
 
+@mcp.tool
+@handle_mcp_exceptions
+async def get_streamer_current_performance(user_login: str) -> dict:
+    """Get current performance metrics for a specific streamer
+
+    Args:
+        user_login: Twitch username of the streamer
+
+    Returns:
+        A dictionary with the streamer's current performance metrics
+    """
+    try:
+        logger.info(f"Fetching current performance for user: {user_login}")
+
+        twitch_service = TwitchService()
+        db_service = DatabaseService("twitch_analytics.db")
+
+        snapshot = await twitch_service.get_user_performance(user_login)
+
+        try:
+            db_service.insert_stream_snapshots([snapshot])
+        except Exception as db_error:
+            raise DatabaseError(f"Failed to save stream snapshot: {db_error}")
+
+        result = {
+            "user": snapshot.user_name,
+            "viewers": snapshot.viewer_count,
+            "game": snapshot.game_name,
+            "title": snapshot.title,
+            "language": snapshot.language,
+            "is_live": snapshot.is_live,
+            "timestamp": str(snapshot.timestamp),
+        }
+
+        logger.info(f"Successfully fetched performance for user: {user_login}")
+        return result
+
+    finally:
+        if "twitch_service" in locals() and twitch_service:
+            try:
+                await twitch_service.close()
+            except Exception as cleanup_error:
+                logger.warning(f"Error during cleanup: {cleanup_error}")
+
+
 if __name__ == "__main__":
     mcp.run()

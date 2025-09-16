@@ -129,3 +129,26 @@ class TwitchService:
             raise ResourceNotFoundError("No top games are currently available")
 
         return games
+
+    @handle_twitch_exceptions
+    async def get_user_performance(self, user_login: str) -> StreamSnapshot:
+        """Fetch current stream metrics for a specific user"""
+        twitch = await self._get_client()
+
+        async for stream in twitch.get_streams(user_login=[user_login]):
+            if stream.user_login.lower() == user_login.lower():
+                snapshot = StreamSnapshot(
+                    user_login=stream.user_login,
+                    user_name=stream.user_name,
+                    viewer_count=stream.viewer_count,
+                    game_name=stream.game_name,
+                    game_id=stream.game_id,
+                    title=stream.title,
+                    timestamp=stream.started_at,
+                    is_live=True,
+                    language=stream.language or "en",
+                )
+                return snapshot
+
+        logger.warning(f"User '{user_login}' is not currently live")
+        raise ResourceNotFoundError(f"User '{user_login}' is not currently live")
