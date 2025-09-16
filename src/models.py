@@ -16,30 +16,6 @@ class StreamSnapshot(BaseModel):
     language: str = "en"
 
 
-class UserAnalytics(BaseModel):
-    """Pydantic model for user analytics data"""
-
-    user_login: str
-    user_name: str
-    avg_viewers: int
-    peak_viewers: int
-    total_streams: int
-    top_games: list[str]
-    best_streaming_hours: list[str]
-    last_updated: datetime
-
-
-class GameTrend(BaseModel):
-    """Pydantic model for game trend data"""
-
-    game_id: str
-    game_name: str
-    total_viewers: int
-    total_streams: int
-    trend_score: float
-    timestamp: datetime
-
-
 class GameRanking(BaseModel):
     """Pydantic model for game ranking data"""
 
