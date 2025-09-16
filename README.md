@@ -22,6 +22,11 @@ Instead of using multiple tools and dashboards, just ask your MCP client natural
   <img src="twitch-control.gif" alt="Demo Gif" width="1200"/>
 </p>
 
+<p align="center">
+  <img src="twitch-control2.gif" alt="Demo Gif" width="1200"/>
+</p>
+
+
 ## Tech Stack
 
 - **FastMCP** - MCP server framework
