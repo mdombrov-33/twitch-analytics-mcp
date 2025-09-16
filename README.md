@@ -3,24 +3,23 @@
 [![Twitch](https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white)](https://twitch.tv)
 [![MCP Server](https://img.shields.io/badge/MCP-Server-brightgreen?style=for-the-badge&logo=claude&logoColor=white)](https://modelcontextprotocol.io)
 
-# Twitch Analytics MCP Server
+# Twitch MCP Server
 
-A Model Context Protocol (MCP) server that provides comprehensive Twitch analytics through any MCP-compatible client. Analyze streamer performance, discover trending content, and get data-driven streaming insights using real Twitch API data.
+A comprehensive Model Context Protocol (MCP) server that provides full Twitch integration through any MCP-compatible client. Control your stream, manage your community, analyze performance, and automate Twitch operations using natural language commands and real Twitch API data.
 
 ## What is this?
 
 This MCP server connects any MCP client to Twitch's API, giving you tools to:
 
-- Analyze any streamer's performance and growth trends
-- Find trending streamers and games in real-time
-- Get optimal streaming time recommendations
-- Compare streamers side-by-side
-- Track game popularity over time
+- **Query Twitch Data** - Get top games, streamers, and performance metrics
+- **Access Historical Data** - Retrieve cached information for analysis
+- **Stream Control** - Manage your Twitch channel operations
+- **Community Management** - Handle moderation and interactive features
 
-Instead of manually checking Twitch or using multiple analytics sites, just ask your MCP client questions like "How is pokimane performing this week?" or "What games are trending right now?"
+Instead of using multiple tools and dashboards, just ask your MCP client natural language questions like "What are the top games right now?" or "How is shroud performing today?"
 
 <p align="center">
-  <img src="twitch-analytics.gif" alt="Demo Gif" width="1200"/>
+  <img src="twitch-control.gif" alt="Demo Gif" width="1200"/>
 </p>
 
 ## Tech Stack
@@ -35,10 +34,10 @@ Instead of manually checking Twitch or using multiple analytics sites, just ask 
 ```
 MCP Client ←→ MCP Protocol ←→ FastMCP Server ←→ Twitch API
                                     ↓
-                            SQLite Analytics History
+                            SQLite Cache & History
 ```
 
-When you ask questions about Twitch analytics, the server makes fresh API calls to fetch real-time data and optionally caches it to build historical analytics. Every tool call gets the latest live data directly from Twitch.
+When you ask questions or make requests, the server fetches real-time data from Twitch's API and can also query cached historical data. This enables both current information and trend analysis through natural language queries.
 
 ## MCP Client Compatibility
 
@@ -50,29 +49,23 @@ Works with any MCP-compatible client including:
 - Third-party MCP clients
 - Your own applications using MCP libraries
 
-## Features (Planned)
+## Current Features
 
-**Phase 1 - Core Analytics**
+- Get top games on Twitch
+- Get top channels/streamers
+- Get performance data by user login
+- Retrieve data from local database
 
-- `discover_trending_streamers` - Find top live streamers
-- `analyze_game_trends` - Current game popularity
-- `analyze_streamer_performance` - Viewer stats and growth
-
-**Phase 2 - Advanced Features**
-
-- `optimal_streaming_times` - Best hours/days to stream
-- `compare_streamers` - Side-by-side comparisons
-- `analyze_my_follows` - Your following list analysis
-
-And 9 more tools for comprehensive Twitch analytics.
+The server provides both live Twitch API data and cached historical data, enabling natural language queries about Twitch content and performance. More Twitch API integrations coming soon.
 
 ## Setup
 
 1. Get Twitch API credentials from [dev.twitch.tv](https://dev.twitch.tv/)
+   - You'll need appropriate OAuth scopes for the features you want to use
 2. Install dependencies: `poetry install`
 3. Configure environment variables in `.env`
 4. Add server to your MCP client's configuration
-5. Start querying Twitch data through your preferred MCP client!
+5. Start controlling Twitch through natural language commands!
 
 ## Configuration Examples
 
@@ -85,7 +78,7 @@ Add the following to your Claude Desktop `claude_desktop_config.json` file:
 ```json
 {
   "mcpServers": {
-    "twitch-analytics": {
+    "twitch-server": {
       "command": "wsl",
       "args": [
         "bash",
@@ -106,7 +99,7 @@ Add the following to your Claude Desktop `claude_desktop_config.json` file:
 ```json
 {
   "mcpServers": {
-    "twitch-analytics": {
+    "twitch-server": {
       "command": "powershell",
       "args": [
         "-Command",
@@ -126,7 +119,7 @@ Add the following to your Claude Desktop `claude_desktop_config.json` file:
 ```json
 {
   "mcpServers": {
-    "twitch-analytics": {
+    "twitch-server": {
       "command": "bash",
       "args": [
         "-c",
@@ -146,9 +139,6 @@ Add the following to your Claude Desktop `claude_desktop_config.json` file:
 - Replace `/path/to/your/twitch-mcp` with the actual path to your project directory
 - Replace `your_app_id_here` and `your_app_secret_here` with your actual Twitch API credentials
 - Ensure Poetry is installed and available in your system PATH
+- Different features require different OAuth scopes - check Twitch API documentation
 - For WSL, make sure the path uses Linux-style forward slashes
 - For Windows, use backslashes in the path and escape them in JSON
-
-## Why MCP?
-
-Model Context Protocol provides a standardized way for AI systems and applications to access external tools and data sources. Instead of building custom integrations for each client, this server works with any MCP-compatible system, making Twitch analytics accessible through natural language queries across different platforms.
