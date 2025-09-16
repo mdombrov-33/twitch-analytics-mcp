@@ -141,5 +141,39 @@ async def get_channel_current_performance(user_login: str) -> dict:
                 logger.warning(f"Error during cleanup: {cleanup_error}")
 
 
+@mcp.tool
+@handle_mcp_exceptions
+async def get_all_stream_snapshots_from_db() -> list[dict]:
+    """Get all stored stream snapshots from the database
+
+    Returns:
+        List of all stream snapshots with their details
+    """
+    try:
+        logger.info("Fetching all stored stream snapshots")
+
+        db_service = DatabaseService("twitch_analytics.db")
+        snapshots = db_service.get_all_streams()
+
+        result = [
+            {
+                "user": s.user_name,
+                "viewers": s.viewer_count,
+                "game": s.game_name,
+                "title": s.title,
+                "language": s.language,
+                "is_live": s.is_live,
+                "timestamp": str(s.timestamp),
+            }
+            for s in snapshots
+        ]
+
+        logger.info(f"Successfully returned {len(result)} stored stream snapshots")
+        return result
+
+    except Exception as db_error:
+        raise DatabaseError(f"Failed to fetch stored stream snapshots: {db_error}")
+
+
 if __name__ == "__main__":
     mcp.run()
